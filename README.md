@@ -4,7 +4,7 @@ A simulation game for learning double circulation.
 (Age: Secondary 4-6 / Grade 10-12.)
 
 ## Play Here:
-*(Link will appear after deployment)*
+tywan-zzz.github.io
 
 ## How to Play:
 1. Player moves between organs and perform different actions. The goal is to keep the body oxygenated and remove any carbon dioxide and urea. 
