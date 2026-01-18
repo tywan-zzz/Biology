@@ -49,22 +49,45 @@
             border-left: 5px solid #0066cc;
         }
         
+        /* Top section with current location and history */
+        .top-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* Current location bar - made smaller */
+        .current-location {
+            flex: 1;
+            min-width: 250px;
+            background-color: #ffe6e6;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 3px solid #cc0000;
+            height: fit-content;
+        }
+        
+        /* History section with increased height and width */
+        .history-section {
+            flex: 2;
+            min-width: 400px; /* Increased from 300px */
+            background-color: #f9f9f9;
+            padding: 20px; /* Increased padding */
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            max-height: 300px; /* Increased from 200px */
+            overflow-y: auto;
+        }
+        
         .game-area {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
             margin-bottom: 30px;
-        }
-        
-        .current-location {
-            background-color: #ffe6e6;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.4rem;
-            border: 3px solid #cc0000;
         }
         
         .actions-section, .organs-section {
@@ -129,16 +152,6 @@
             color: #aaa;
             cursor: not-allowed;
             border: 2px solid #ddd;
-        }
-        
-        .history-section {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            max-height: 300px;
-            overflow-y: auto;
         }
         
         .history-item {
@@ -275,17 +288,22 @@
             animation: flash-black-red 0.6s infinite;
         }
         
+        /* CHANGED: Updated instructions styling for new position */
         .instructions {
             background-color: #fff8e1;
             padding: 15px;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-top: 20px; /* Changed from margin-bottom */
             border-left: 5px solid #ff9900;
         }
         
         .instructions h3 {
             margin-top: 0;
             color: #cc6600;
+        }
+        
+        .instructions p {
+            margin: 5px 0;
         }
         
         .status-indicators {
@@ -422,6 +440,10 @@
         }
         
         @media (max-width: 768px) {
+            .top-section {
+                flex-direction: column;
+            }
+            
             .game-area {
                 flex-direction: column;
             }
@@ -449,56 +471,67 @@
             </div>
         </header>
         
-        <div class="current-location" id="currentLocation">
-            Current Location: LUNGS
+        <!-- Top section with current location and history -->
+        <div class="top-section">
+            <!-- Current location bar - made smaller -->
+            <div class="current-location" id="currentLocation">
+                Current Location: LUNGS
+            </div>
+            
+            <!-- History section with increased height and width -->
+            <div class="history-section">
+                <h2 class="section-title">Journey History</h2>
+                <div class="color-legend">
+                    <div class="color-item">
+                        <span class="color-dot yellow-dot"></span>
+                        <span style="color: #cc9900;">yellow: pathway made</span>
+                    </div>
+                    <div class="color-item">
+                        <span class="color-dot green-dot"></span>
+                        <span style="color: #009900;">green: correct action</span>
+                    </div>
+                    <div class="color-item">
+                        <span class="color-dot blue-dot"></span>
+                        <span style="color: #0066cc;">blue: reminder</span>
+                    </div>
+                    <div class="color-item">
+                        <span class="color-dot red-dot"></span>
+                        <span style="color: #ff0000;">red: warning</span>
+                    </div>
+                </div>
+                <div id="historyLog">
+                    <!-- History entries will be added here -->
+                </div>
+            </div>
         </div>
         
         <div class="game-area">
             <div class="actions-section">
                 <h2 class="section-title">Actions at Current Organ</h2>
+                
+                <!-- CHANGED: Moved instructions to below the action buttons -->
+                <div class="action-buttons" id="actionButtons">
+                    <!-- Action buttons will be generated here -->
+                </div>
+                
                 <div class="instructions">
                     <h3>Instructions:</h3>
                     <p>At LUNGS: Uptake O₂ and release CO₂ before moving to the next organ. You may perform more than one action at each organ.</p>
-                </div>
-                <div class="action-buttons" id="actionButtons">
-                    <!-- Action buttons will be generated here -->
                 </div>
             </div>
             
             <div class="organs-section">
                 <h2 class="section-title">Travel to Next Organ</h2>
+                
+                <!-- CHANGED: Moved instructions to below the organ buttons -->
+                <div class="organ-buttons" id="organButtons">
+                    <!-- Organ buttons will be generated here -->
+                </div>
+                
                 <div class="instructions">
                     <h3>Instructions:</h3>
                     <p>Cannot travel to the current organ. Body organs can only be visited once. Visit all body organs before clicking the "Finish Journey" button at the bottom of the page.</p>
                 </div>
-                <div class="organ-buttons" id="organButtons">
-                    <!-- Organ buttons will be generated here -->
-                </div>
-            </div>
-        </div>
-        
-        <div class="history-section">
-            <h2 class="section-title">Journey History</h2>
-            <div class="color-legend">
-                <div class="color-item">
-                    <span class="color-dot yellow-dot"></span>
-                    <span style="color: #cc9900;">yellow: pathway made</span>
-                </div>
-                <div class="color-item">
-                    <span class="color-dot green-dot"></span>
-                    <span style="color: #009900;">green: correct action</span>
-                </div>
-                <div class="color-item">
-                    <span class="color-dot blue-dot"></span>
-                    <span style="color: #0066cc;">blue: reminder</span>
-                </div>
-                <div class="color-item">
-                    <span class="color-dot red-dot"></span>
-                    <span style="color: #ff0000;">red: warning</span>
-                </div>
-            </div>
-            <div id="historyLog">
-                <!-- History entries will be added here -->
             </div>
         </div>
         
@@ -536,7 +569,6 @@
             <div class="result-pathway" id="resultPathway"></div>
             <div class="visit-count" id="visitCounts"></div>
             
-            <!-- AMENDMENT 2: Added larger status indicators for results -->
             <div class="results-status-indicators" id="resultsStatusIndicators">
                 <div class="results-status-box">
                     <div class="results-status-title">Pathway Accuracy</div>
@@ -561,8 +593,7 @@
                 <div id="resultsHistoryLog"></div>
             </div>
             
-            <!-- Old problem-counts div removed as per Amendment 2 -->
-            
+            <!-- Restored Play Again button -->
             <button class="action-btn" id="restartBtn" style="margin-top: 30px;">Play Again</button>
         </div>
     </div>
@@ -577,8 +608,8 @@
             visitedBodyOrgans: new Set(),
             allVisited: false,
             
-            // Actions tracking
-            actions: {
+            // Actions tracking - FIX: Track actions per visit, not just once
+            actionsPerVisit: {
                 lungs: { uptakeO2: false, releaseCO2: false },
                 heart: { uptakeCO2: false, releaseO2: false },
                 'small intestine': { uptakeCO2: false, releaseO2: false },
@@ -727,7 +758,7 @@
                     type = 'comment';
                 } else {
                     // Valid UREA release at kidney
-                    gameState.actions[organ][action] = true;
+                    gameState.actionsPerVisit[organ][action] = true;
                     gameState.hasUrea = false;
                     gameState.ureaReleased = true;
                     message = 'successful urea release';
@@ -739,7 +770,7 @@
                     message = 'Action invalid';
                     type = 'comment';
                 } else {
-                    gameState.actions[organ][action] = true;
+                    gameState.actionsPerVisit[organ][action] = true;
                     gameState.hasUrea = true;
                     message = 'successful urea uptake';
                     type = 'feedback';
@@ -773,7 +804,7 @@
                         message = 'successful oxygen release';
                     }
                     
-                    gameState.actions[organ][action] = true;
+                    gameState.actionsPerVisit[organ][action] = true;
                     type = 'feedback';
                 }
             }
@@ -802,7 +833,7 @@
                         message = 'successful carbon dioxide uptake';
                     }
                     
-                    gameState.actions[organ][action] = true;
+                    gameState.actionsPerVisit[organ][action] = true;
                     type = 'feedback';
                 }
             }
@@ -812,7 +843,7 @@
                         message = 'You have not picked up any carbon dioxide from your body!';
                         type = 'comment';
                     } else {
-                        gameState.actions[organ][action] = true;
+                        gameState.actionsPerVisit[organ][action] = true;
                         gameState.hasCO2 = false;
                         
                         // Reset CO2 uptake counter to 3
@@ -826,7 +857,7 @@
             }
             else if (action === 'uptakeO2') {
                 if (organ === 'lungs') {
-                    gameState.actions[organ][action] = true;
+                    gameState.actionsPerVisit[organ][action] = true;
                     gameState.hasOxygen = true;
                     
                     // Reset O2 release counter to 3
@@ -863,6 +894,9 @@
             gameState.currentOrgan = organ;
             gameState.visitedOrgans.add(organ);
             
+            // Reset actions for the new organ
+            resetActionsForOrgan(organ);
+            
             // Check for special pathway: small intestine -> liver
             gameState.smallIntestineToLiverPath = (previousOrgan === 'small intestine' && organ === 'liver');
             
@@ -881,6 +915,15 @@
             
             // Log the travel
             logHistory(`Traveled from ${previousOrgan} to ${organ}`, 'statement');
+        }
+        
+        // Reset actions for an organ (when arriving)
+        function resetActionsForOrgan(organ) {
+            if (gameState.actionsPerVisit[organ]) {
+                for (let action in gameState.actionsPerVisit[organ]) {
+                    gameState.actionsPerVisit[organ][action] = false;
+                }
+            }
         }
         
         // Check if pathway is correct and log statements if not
@@ -949,48 +992,53 @@
                 
                 // Determine which statement to show
                 let statement = '';
+                let warning = '';
                 
                 if (gameState.bodyOrgans.includes(fromOrgan) && gameState.bodyOrgans.includes(toOrgan)) {
                     statement = 'You\'re travelling a long distance... Go back to the heart to give yourself an extra push and visit the lungs for more oxygen!';
-                    if (statement) {
-                        gameState.statements.push(statement);
-                        logHistory(`Pathway from ${fromOrgan} to ${toOrgan}: ${statement}`, 'statement');
-                    }
                 } 
-                // AMENDMENT 2: Updated this condition to give BOTH warning and statement
+                // Check for incorrect pathway: from body to lungs OR from lungs to body (without going to heart first)
                 else if ((gameState.bodyOrgans.includes(fromOrgan) && toOrgan === 'lungs') || 
                         (fromOrgan === 'lungs' && gameState.bodyOrgans.includes(toOrgan))) {
-                    // Warning
-                    const warning = 'You haven\'t been giving your heart enough oxygen and removing its carbon dioxide!';
-                    gameState.warnings.push(warning);
-                    gameState.classAProblems++; // Counts as class A
-                    gameState.classBProblems++; // Counts as class B
-                    logHistory(`Warning: ${warning}`, 'warning');
-                    
-                    // Statement
-                    const statement = 'You\'re travelling a long distance... Go back to the heart to give yourself an extra push';
-                    gameState.statements.push(statement);
-                    logHistory(`Pathway from ${fromOrgan} to ${toOrgan}: ${statement}`, 'statement');
+                    // Both warning and statement for this pattern
+                    warning = 'You haven\'t been giving your heart enough oxygen and removing its carbon dioxide!';
+                    statement = 'You\'re travelling a long distance... Go back to the heart to give yourself an extra push';
                 } 
-                // AMENDMENT 2: Updated this condition to give BOTH warning and statement
-                else if (fromOrgan === 'lungs' && toOrgan === 'heart' && gameState.pathway[gameState.pathway.length-2] === 'heart') {
-                    // Warning
-                    const warning = 'You haven\'t been giving your body enough oxygen... HYPOXIA';
+                // Check for incorrect pathway: from lungs to heart to lungs (without going to body first)
+                else if (fromOrgan === 'heart' && toOrgan === 'lungs') {
+                    // Check if the previous organ before heart was lungs
+                    const organBeforeHeart = gameState.pathway[gameState.pathway.length - 2];
+                    if (organBeforeHeart === 'lungs') {
+                        warning = 'You haven\'t been giving your body enough oxygen... HYPOXIA';
+                        statement = 'Your body cells are missing you... and their precious oxygen.';
+                    }
+                } 
+                // Check for incorrect pathway: from body to heart to body (without going to lungs first)
+                else if (gameState.bodyOrgans.includes(fromOrgan) && toOrgan === 'heart') {
+                    // Check if the previous organ before the body organ was heart
+                    const organBeforeBodyOrgan = gameState.pathway[gameState.pathway.length - 2];
+                    if (organBeforeBodyOrgan === 'heart') {
+                        statement = 'You haven\'t visited your lungs in a while... Are you sure you have enough oxygen to feed everyone?';
+                    }
+                }
+                
+                // Log warning if present
+                if (warning) {
                     gameState.warnings.push(warning);
-                    gameState.classAProblems++; // Counts as class A
+                    // Count as both Class A and Class B problems for the heart oxygen/CO2 warning
+                    if (warning.includes('heart enough oxygen')) {
+                        gameState.classAProblems++;
+                        gameState.classBProblems++;
+                    } else if (warning.includes('HYPOXIA')) {
+                        gameState.classAProblems++;
+                    }
                     logHistory(`Warning: ${warning}`, 'warning');
-                    
-                    // Statement
-                    const statement = 'Your body cells are missing you... and their precious oxygen.';
+                }
+                
+                // Log statement if present
+                if (statement) {
                     gameState.statements.push(statement);
                     logHistory(`Pathway from ${fromOrgan} to ${toOrgan}: ${statement}`, 'statement');
-                } else if (gameState.bodyOrgans.includes(fromOrgan) && toOrgan === 'heart' && 
-                          gameState.pathway[gameState.pathway.length-2] === 'body') {
-                    statement = 'You haven\'t visited your lungs in a while... Are you sure you have enough oxygen to feed everyone?';
-                    if (statement) {
-                        gameState.statements.push(statement);
-                        logHistory(`Pathway from ${fromOrgan} to ${toOrgan}: ${statement}`, 'statement');
-                    }
                 }
             }
             
@@ -1016,7 +1064,7 @@
         
         // Check for warnings from the organ being left
         function checkWarnings(organ) {
-            const actions = gameState.actions[organ];
+            const actions = gameState.actionsPerVisit[organ];
             
             // Check for oxygen warnings at lungs
             if (organ === 'lungs' && !actions.uptakeO2) {
@@ -1035,8 +1083,7 @@
                 logHistory(`Warning from ${organ}: ${warning}`, 'warning');
             }
             
-            // AMENDMENT 1: Warnings for heart already exist in the code
-            // Check for oxygen release warnings at heart
+            // FIX: Check for oxygen release warnings at heart - now checks per visit
             if (organ === 'heart' && !actions.releaseO2) {
                 const warning = 'You haven\'t been giving your body enough oxygen... HYPOXIA';
                 gameState.warnings.push(warning);
@@ -1044,7 +1091,7 @@
                 logHistory(`Warning from ${organ}: ${warning}`, 'warning');
             }
             
-            // Check for CO2 uptake warnings at heart
+            // FIX: Check for CO2 uptake warnings at heart - now checks per visit
             if (organ === 'heart' && !actions.uptakeCO2) {
                 const warning = 'You haven\'t been removing CO2 from your body... ACID accumulating';
                 gameState.warnings.push(warning);
@@ -1151,7 +1198,7 @@
         function finishJourney() {
             // Hide game elements
             document.querySelector('.game-area').style.display = 'none';
-            document.querySelector('.history-section').style.display = 'none';
+            document.querySelector('.top-section').style.display = 'none';
             document.querySelector('.status-indicators').style.display = 'none';
             document.getElementById('finishBtn').style.display = 'none';
             
@@ -1256,14 +1303,14 @@
             else if (classC >= 3) acidosisLevel = 'Moderate acidosis';
             else if (classC >= 1) acidosisLevel = 'Mild acidosis';
             
-            // Determine cause based on new rules
+            // FIX: Determine cause based on new rules with updated text
             let cause = '';
             if (classB > 0 && ureaProblems === 0) {
-                cause = 'due to carbon dioxide accumulation';
+                cause = 'Acidosis due to carbon dioxide accumulation';
             } else if (classB > 0 && ureaProblems > 0) {
-                cause = 'due to carbon dioxide and urea accumulation';
+                cause = 'Acidosis due to carbon dioxide and urea accumulation';
             } else if (classB === 0 && ureaProblems > 0) {
-                cause = 'due to urea accumulation';
+                cause = 'Acidosis due to urea accumulation';
             }
             
             // Determine overall result for flashing effects
@@ -1314,7 +1361,7 @@
                 container.classList.add('flash-black-white');
                 resultTitle.textContent = 'SEVERAL ORGAN FAILURES';
                 resultTitle.style.fontSize = '3rem';
-                resultTitle.style.color = 'white';
+                resultTitle.style.color = 'black'; // Changed from white to black
             } else if (severityCounts['Moderate'] >= 1 || 
                       severityCounts['Mild'] >= 2 || 
                       (severityCounts['Moderate'] >= 1 && severityCounts['Mild'] >= 1)) {
@@ -1349,9 +1396,12 @@
             resultSubtitle.textContent = subtitleText;
             resultSubtitle.style.color = '#ff0000';
             
+            // Always set resultDetails if there's a cause
             if (cause) {
                 resultDetails.textContent = cause;
                 resultDetails.style.color = '#ff0000';
+            } else {
+                resultDetails.textContent = '';
             }
             
             // Set pathway message (if any) - BELOW the hypoxia/acidosis results
@@ -1370,13 +1420,12 @@
             }
         }
         
-        // Restart the game
+        // Restart the game (now properly working)
         function restartGame() {
-            // AMENDMENT 1: Added proper reset of body and container
+            // Reset body and container classes
             const body = document.body;
             const container = document.querySelector('.container');
             
-            // Reset body and container classes
             body.className = '';
             container.className = 'container';
             
@@ -1387,16 +1436,16 @@
             gameState.visitedBodyOrgans = new Set();
             gameState.allVisited = false;
             
-            // Reset actions
-            for (let organ in gameState.actions) {
-                for (let action in gameState.actions[organ]) {
-                    gameState.actions[organ][action] = false;
+            // Reset actions per visit for all organs
+            for (let organ in gameState.actionsPerVisit) {
+                for (let action in gameState.actionsPerVisit[organ]) {
+                    gameState.actionsPerVisit[organ][action] = false;
                 }
             }
             
             // Reset status flags
             gameState.hasOxygen = false;
-            gameState.hasCO2 = true; // Blood starts saturated with CO2
+            gameState.hasCO2 = true;
             gameState.hasUrea = false;
             gameState.ureaReleased = false;
             
@@ -1423,9 +1472,9 @@
             gameState.pathway = ['lungs'];
             gameState.lastCorrectPathway = true;
             
-            // Reset UI
+            // Reset UI - Make everything visible again
             document.querySelector('.game-area').style.display = '';
-            document.querySelector('.history-section').style.display = '';
+            document.querySelector('.top-section').style.display = 'flex';
             document.querySelector('.status-indicators').style.display = '';
             document.getElementById('finishBtn').style.display = '';
             document.getElementById('resultsPanel').style.display = 'none';
